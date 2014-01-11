@@ -6,7 +6,8 @@ name := "sdntest"
 scalaVersion := "2.10.3"
 
 resolvers ++= Seq(
-  "spring" at "http://repo.spring.io/milestone"
+  "spring" at "http://repo.spring.io/milestone",
+  "neo4j-releases" at "http://m2.neo4j.org/releases/"
 )
 
 libraryDependencies ++= Seq(
