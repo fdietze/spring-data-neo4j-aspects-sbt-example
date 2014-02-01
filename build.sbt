@@ -1,5 +1,5 @@
-import com.typesafe.sbt.SbtAspectj._
-import com.typesafe.sbt.SbtAspectj.AspectjKeys._
+//import com.typesafe.sbt.SbtAspectj._
+//import com.typesafe.sbt.SbtAspectj.AspectjKeys._
 
 name := "sdntest"
 
@@ -11,30 +11,32 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "org.springframework.data" % "spring-data-neo4j"         % "3.0.0.M1"      % "compile",
-  "org.springframework.data" % "spring-data-neo4j-aspects" % "3.0.0.M1"      % "compile",
-  "javax.persistence"        % "persistence-api"           % "1.0"           % "compile",
-  "javax.validation"         % "validation-api"            % "1.0.0.GA"      % "compile",
-  "junit"                    % "junit"                     % "4.11"          % "test",
-  "com.novocode"             % "junit-interface"           % "0.9"           % "test",
-  "org.springframework"      % "spring-test"               % "4.0.0.RELEASE" % "test"
+/*  "org.springframework.data" % "spring-data-neo4j"         % "3.0.0.M1"      % "compile",*/
+  //"org.springframework.data" % "spring-data-neo4j-aspects" % "3.0.0.M1"      % "compile",
+  //"javax.persistence"        % "persistence-api"           % "1.0"           % "compile",
+  //"javax.validation"         % "validation-api"            % "1.0.0.GA"      % "compile",
+  //"junit"                    % "junit"                     % "4.11"          % "test",
+  //"com.novocode"             % "junit-interface"           % "0.9"           % "test",
+  /*"org.springframework"      % "spring-test"               % "4.0.0.RELEASE" % "test"*/
 )
 
+javacOptions ++= Seq("-source", "1.6",  "-target", "1.6")
 
-Seq(aspectjSettings: _*)
 
-verbose in Aspectj := false
+//Seq(aspectjSettings: _*)
 
-showWeaveInfo in Aspectj := false
+//verbose in Aspectj := false
 
-inputs in Aspectj <+= compiledClasses
+//showWeaveInfo in Aspectj := false
 
-binaries in Aspectj <++= update map { report:UpdateReport =>
-  report.matching(
-     moduleFilter(organization = "org.springframework.data", name = "spring-data-neo4j-aspects")
-  )
-}
+//inputs in Aspectj <+= compiledClasses
 
-products in Compile <<= products in Aspectj
+//binaries in Aspectj <++= update map { report:UpdateReport =>
+  //report.matching(
+     //moduleFilter(organization = "*", name = "*")
+  //)
+//}
 
-products in Runtime <<= products in Compile
+//products in Compile <<= products in Aspectj
+
+//products in Runtime <<= products in Compile
