@@ -28,19 +28,27 @@ dependencyOverrides += "org.aspectj" % "aspectjweaver" % "1.7.2"
 
 dependencyOverrides += "org.aspectj" % "aspectjtools" % "1.7.2"
 
-//javacOptions ++= Seq("-source", "1.6",  "-target", "1.6")
+//javacOptions ++= Seq("-source", "1.6",  "-target", "1.6"), also set for aspectj
 
-//compileOrder := CompileOrder.JavaThenScala
-
-net.virtualvoid.sbt.graph.Plugin.graphSettings
-
+// splitting sources:
+// *.scala --> scalac
+// *.java  --> AspectJ compiler
+// all class files come back together at "products in Compile"
+// TODO: managedSources are dropped right now
 Seq(aspectjSettings: _*)
 
 verbose in Aspectj := true
 
 showWeaveInfo in Aspectj := true
 
-sources in Aspectj <<= (sources in Compile).map( _.filter(_.name.endsWith(".java")) )
+// let all unmanaged java sources be compiled by ajc
+sources in Aspectj <<= (unmanagedSources in Compile).map(_.filter(_.name.endsWith(".java")))
+
+// let the rest be compiled by scalac
+sources in Compile <<= (unmanagedSources in Compile).map(_.filterNot(_.name.endsWith(".java")))
+
+sources in Compile <++= managedSources in Compile
+
 
 binaries in Aspectj <++= update map { report:UpdateReport =>
   report.matching(
@@ -49,7 +57,8 @@ binaries in Aspectj <++= update map { report:UpdateReport =>
   )
 }
 
-
+// add compiled aspectj class files to the rest
 products in Compile <++= products in Aspectj
 
 products in Runtime <<= products in Compile
+

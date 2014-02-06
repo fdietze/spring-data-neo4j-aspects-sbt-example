@@ -6,5 +6,3 @@ dependencyOverrides += "org.aspectj" % "aspectjweaver" % "1.7.2"
 
 dependencyOverrides += "org.aspectj" % "aspectjtools" % "1.7.2"
 
-
-addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.7.4")
